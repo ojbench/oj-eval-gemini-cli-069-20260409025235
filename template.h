@@ -31,7 +31,7 @@ MemoryBlock* head = nullptr; // 内存块链表头指针
  * @return 拆分后新块的指针（如果拆分失败,返回nullptr）
  */
 inline MemoryBlock* splitBlock(MemoryBlock* block, size_t size) {
-    if (block->size < size + sizeof(MemoryBlock)) {
+    if (static_cast<size_t>(block->size) < size + sizeof(MemoryBlock)) {
         return nullptr; // 无法拆分
     }
     // 创建新的内存块
@@ -72,7 +72,7 @@ inline MemoryBlock* allocate(int size){
     MemoryBlock* curr = head;
     while (curr != nullptr) {
         if (curr->is_free && curr->size >= size) {
-            if (curr->size >= size + sizeof(MemoryBlock)) {
+            if (static_cast<size_t>(curr->size) >= size + sizeof(MemoryBlock)) {
                 splitBlock(curr, size);
             }
             curr->is_free = false;

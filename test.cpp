@@ -133,7 +133,7 @@ bool testAllAllocAndDealloc(){
 
     //分配大块
     MemoryBlock* big_block = allocate(MEMORY_SIZE - sizeof(MemoryBlock) - 1);;
-    if(!big_block || big_block->size < MEMORY_SIZE - sizeof(MemoryBlock) - 1 || !big_block->is_free == false) return false;
+    if(!big_block || static_cast<size_t>(big_block->size) < MEMORY_SIZE - sizeof(MemoryBlock) - 1 || !big_block->is_free == false) return false;
     return true;
 }
 
